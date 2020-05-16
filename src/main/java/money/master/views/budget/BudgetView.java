@@ -1,6 +1,8 @@
 package money.master.views.budget;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
@@ -18,6 +20,7 @@ import money.master.backend.Spending;
 import money.master.views.main.MainView;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 @Route(value = "profile/budget", layout = MainView.class)
@@ -110,8 +113,10 @@ public class BudgetView extends VerticalLayout {
                 essentialSelect.setValue("");
                 gainLoseSelect.setValue("");
             });
+            saveButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
             Button closeButton = new Button("Close", onCloseClick -> addHours.close());
+            closeButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
     
             addHours.setPosition(Notification.Position.MIDDLE);
             notificationLayout.setWidthFull();
@@ -145,8 +150,12 @@ public class BudgetView extends VerticalLayout {
             essentialSelect.setLabel("Essential or Non-Essential");
             essentialSelect.setItems("Essential", "Non-Essential");
             essentialSelect.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+    
+            DatePicker dateChooser = new DatePicker("Select Date");
+            dateChooser.setMax(LocalDate.now());
+            dateChooser.setValue(LocalDate.now());
 
-            HorizontalLayout notificationLayout = new HorizontalLayout(name, currencyInput, gainLoseSelect, essentialSelect);
+            HorizontalLayout notificationLayout = new HorizontalLayout(name, currencyInput, gainLoseSelect, essentialSelect, dateChooser);
 
             Button saveButton = new Button("Save", onSave -> {
                 Spending spending = new Spending();
@@ -155,16 +164,20 @@ public class BudgetView extends VerticalLayout {
                 spending.setAmt(BigDecimal.valueOf(currencyInput.getValue()));
                 spending.setEssential(essentialSelect.getValue().equals("Essential"));
                 spending.setChange(gainLoseSelect.getValue().equals("Gain"));
+                spending.setLocalDate(dateChooser.getValue());
                 name.setValue("");
                 currencyInput.setValue(0d);
                 essentialSelect.setValue("");
                 gainLoseSelect.setValue("");
+                dateChooser.setValue(LocalDate.now());
             });
 
             Button closeButton = new Button("Close", onCloseClick -> {
                 addHours.close();
                 spendingGrid.setItems(spendingList);
             });
+            saveButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+            closeButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
             
             addHours.setPosition(Notification.Position.MIDDLE);
             notificationLayout.setWidthFull();
