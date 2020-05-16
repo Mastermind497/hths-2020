@@ -14,6 +14,8 @@ import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
 import money.master.views.features.Features;
 
+import java.awt.*;
+
 public class Home extends AppLayout {
     private Image logo = new Image("", "Logo");
     private MenuBar profile = new MenuBar();
@@ -25,6 +27,8 @@ public class Home extends AppLayout {
         
         Tabs tab = new Tabs();
         tab.add(createTab(VaadinIcon.BOOK_DOLLAR, "Features", Features.class));
+        
+        MenuItem profile = new MenuItem("Profile");
     }
     
     /**
