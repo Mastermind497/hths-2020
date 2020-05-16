@@ -2,6 +2,7 @@ package money.master.views.budget;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -9,20 +10,28 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import money.master.backend.Salary;
 import money.master.backend.Spending;
 import money.master.views.main.MainView;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Route(value = "profile/budget", layout = MainView.class)
 public class BudgetView extends VerticalLayout {
+    
+    private Salary salary = new Salary(BigDecimal.valueOf(150000));
 
     private Button addSpendingButton = createSpendingButton();
 
     public static final List<Spending> spendingList = new ArrayList<>();
+    
+    public BudgetView() {
+        add(new H1("Auto-Budgeter!"));
+        
+        
+    }
 
     public Button createSpendingButton() {
         Button button = new Button("Add Loss/Gain");
