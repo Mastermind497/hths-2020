@@ -1,26 +1,20 @@
 package money.master.views.main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasComponents;
-import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.theme.Theme;import com.vaadin.flow.theme.lumo.Lumo;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 
-import money.master.views.main.MainView;
-import money.master.views.masterdetail.MasterDetailView;
+import java.util.*;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -50,8 +44,8 @@ public class MainView extends AppLayout {
 
     private static Tab[] getAvailableTabs() {
         final List<Tab> tabs = new ArrayList<>();
-        tabs.add(createTab("Master-Detail", MasterDetailView.class));
-        return tabs.toArray(new Tab[tabs.size()]);
+        //Insert Pages as they come
+        return tabs.toArray(new Tab[0]);
     }
 
     private static Tab createTab(String title, Class<? extends Component> viewClass) {
