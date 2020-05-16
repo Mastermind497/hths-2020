@@ -112,6 +112,9 @@ public class BudgetView extends VerticalLayout {
             });
 
             Button closeButton = new Button("Close", onCloseClick -> addHours.close());
+    
+            addHours.setPosition(Notification.Position.MIDDLE);
+            notificationLayout.setWidthFull();
 
             addHours.add(notificationLayout);
             addHours.add(saveButton, closeButton);
@@ -162,6 +165,9 @@ public class BudgetView extends VerticalLayout {
                 addHours.close();
                 spendingGrid.setItems(spendingList);
             });
+            
+            addHours.setPosition(Notification.Position.MIDDLE);
+            notificationLayout.setWidthFull();
 
             addHours.add(notificationLayout);
             addHours.add(saveButton, closeButton);
