@@ -53,7 +53,7 @@ public class MainView extends AppLayout {
         SubMenu  profileSubMenu = profileItem.getSubMenu();
         profileSubMenu.addItem("Update Profile", onClick -> UI.getCurrent().navigate(Profile.class));
         profileSubMenu.add(new Hr());
-        profileSubMenu.addItem("Sign Out");
+        profileSubMenu.addItem("Sign Out", onClick -> UI.getCurrent().navigate(Home.class));
         
         HorizontalLayout navBar = new HorizontalLayout();
         navBar.setPadding(true);
