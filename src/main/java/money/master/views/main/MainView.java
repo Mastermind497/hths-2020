@@ -23,6 +23,7 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
+import money.master.views.budget.BudgetView;
 
 import java.util.*;
 
@@ -55,6 +56,7 @@ public class MainView extends AppLayout {
         profileSubMenu.addItem("Sign Out");
         
         HorizontalLayout navBar = new HorizontalLayout();
+        navBar.setPadding(true);
         navBar.add(new DrawerToggle());
         
         HorizontalLayout spacer = new HorizontalLayout(new H1(""));
@@ -80,7 +82,7 @@ public class MainView extends AppLayout {
 
     private static Tab[] getAvailableTabs() {
         final List<Tab> tabs = new ArrayList<>();
-        //Insert Pages as they come
+        tabs.add(createTab("Budgeter", BudgetView.class));
         return tabs.toArray(new Tab[0]);
     }
 
