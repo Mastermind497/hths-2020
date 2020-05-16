@@ -2,7 +2,9 @@ package money.master.views.budget;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -24,12 +26,21 @@ public class BudgetView extends VerticalLayout {
     private Salary salary = new Salary(BigDecimal.valueOf(150000));
 
     private Button addSpendingButton = createSpendingButton();
+    private Button fixedButton = createFixedButton();
 
     public static final List<Spending> spendingList = new ArrayList<>();
     
     public BudgetView() {
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setAlignItems(Alignment.CENTER);
+        
         add(new H1("Auto-Budgeter!"));
-    
+        add(addSpendingButton);
+        add(fixedButton);
+        
+        add(new H3("Spending"));
+        Grid<Spending> grid = new Grid<>();
+        
     }
         
         

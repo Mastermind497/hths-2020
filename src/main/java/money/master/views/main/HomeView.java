@@ -8,6 +8,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.login.LoginI18n;
+import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -16,6 +18,7 @@ import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
+import money.master.views.budget.BudgetView;
 import money.master.views.features.Features;
 
 public class HomeView extends AppLayout {
@@ -33,24 +36,22 @@ public class HomeView extends AppLayout {
         
         Tabs tab = new Tabs();
         tab.add(createTab(VaadinIcon.BOOK_DOLLAR, "Features", Features.class));
-        
-        Button signIn = new Button("Sign In");
+    
+        LoginOverlay component = new LoginOverlay();
+        component.addLoginListener(e -> {
+            component.close();
+            UI.getCurrent().navigate(BudgetView.class);
+        });
+        Button signIn = new Button("Sign In",
+                                 e -> component.setOpened(true));
+    
+        LoginI18n i18n = LoginI18n.createDefault();
+        i18n.setAdditionalInformation("For the sake of the demonstration of the app, the username and password " +
+                                      "are standardized");
+        component.setI18n(i18n);
         
         signIn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         
-//        HorizontalLayout profileLayout = new HorizontalLayout();
-//        profileLayout.setPadding(false);
-//        profileLayout.setMargin(false);
-//        profileLayout.add(new Icon(VaadinIcon.USER));
-//        profileLayout.add("Profile");
-//
-//        profile.addThemeVariants(MenuBarVariant.LUMO_TERTIARY);
-//
-//        MenuItem profileItem = profile.addItem(profileLayout);
-//        SubMenu profileSubMenu = profileItem.getSubMenu();
-//        profileSubMenu.addItem("Update Profile", onClick -> UI.getCurrent().navigate(Profile.class));
-//        profileSubMenu.add(new Hr());
-//        profileSubMenu.addItem("Sign Out");
         
         menu.add(tab);
         menu.add(signIn);

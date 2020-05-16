@@ -2,9 +2,19 @@ package money.master.views.main;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasComponents;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.contextmenu.MenuItem;
+import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Hr;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.menubar.MenuBar;
+import com.vaadin.flow.component.menubar.MenuBarVariant;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
@@ -25,10 +35,36 @@ import java.util.*;
 public class MainView extends AppLayout {
 
     private final Tabs menu;
+    public final MenuBar profile = new MenuBar();
 
     public MainView() {
         setPrimarySection(Section.DRAWER);
-        addToNavbar(true, new DrawerToggle());
+    
+        HorizontalLayout profileLayout = new HorizontalLayout();
+        profileLayout.setPadding(false);
+        profileLayout.setMargin(false);
+        profileLayout.add(new Icon(VaadinIcon.USER));
+        profileLayout.add("Profile");
+
+        profile.addThemeVariants(MenuBarVariant.LUMO_TERTIARY);
+
+        MenuItem profileItem    = profile.addItem(profileLayout);
+        SubMenu  profileSubMenu = profileItem.getSubMenu();
+        profileSubMenu.addItem("Update Profile", onClick -> UI.getCurrent().navigate(Profile.class));
+        profileSubMenu.add(new Hr());
+        profileSubMenu.addItem("Sign Out");
+        
+        HorizontalLayout navBar = new HorizontalLayout();
+        navBar.add(new DrawerToggle());
+        
+        HorizontalLayout spacer = new HorizontalLayout(new H1(""));
+        spacer.setWidth("90%");
+        navBar.add(spacer);
+        navBar.add(profile);
+        navBar.setWidthFull();
+        
+        addToNavbar(navBar);
+        
         menu = createMenuTabs();
         addToDrawer(menu);
     }
