@@ -15,6 +15,30 @@ public class Spending {
 
     }
 
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public void setAmt(BigDecimal amt) {
+        this.amt = amt;
+    }
+
+    public void setEssential(boolean essential) {
+        this.essential = essential;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setChange(boolean change) {
+        this.change = change;
+    }
+
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
+    }
+
     public Spending(String item, BigDecimal amt, boolean essential, String name,
                     boolean change, LocalDate localDate) {
         this.item = item;
