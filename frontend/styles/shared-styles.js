@@ -9,7 +9,7 @@ $_documentContainer.innerHTML = `
 <custom-style>
   <style>
     html {
-      --lumo-primary-color: hsla(214, 78%, 73%, 1);
+      --lumo-primary-color: hsl(214, 90%, 52%);
       --lumo-font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
       --lumo-border-radius: calc(var(--lumo-size-m) / 2);
     }
@@ -20,7 +20,7 @@ $_documentContainer.innerHTML = `
   <template>
     <style>
       :host(:not([theme~="tertiary"])) {
-        background-image: linear-gradient(var(--lumo-tint-5pct), var(--lumo-shade-5pct));
+        background-image: none;
         box-shadow: inset 0 0 0 1px var(--lumo-contrast-20pct);
       }
 

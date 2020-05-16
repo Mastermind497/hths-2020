@@ -7,7 +7,8 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.NumberRenderer;
@@ -83,14 +84,16 @@ public class BudgetView extends VerticalLayout {
 
             NumberField currencyInput = new NumberField("How much is it worth? ($)");
             currencyInput.setPlaceholder("22.99");
-
-            Select<String> gainLoseSelect = new Select<>();
+            
+            RadioButtonGroup<String> gainLoseSelect = new RadioButtonGroup<>();
+            gainLoseSelect.setLabel("Gain/Lose");
             gainLoseSelect.setItems("Gain", "Lose");
-            gainLoseSelect.setPlaceholder("Gain/Lose");
-
-            Select<String> essentialSelect = new Select<>();
-            essentialSelect.setItems("Essential", "Non-essential");
-            essentialSelect.setValue("Essential");
+            gainLoseSelect.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+            
+            RadioButtonGroup<String> essentialSelect = new RadioButtonGroup<>();
+            essentialSelect.setLabel("Essential or Non-Essential");
+            essentialSelect.setItems("Essential", "Non-Essential");
+            essentialSelect.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 
             HorizontalLayout notificationLayout = new HorizontalLayout(name, currencyInput, gainLoseSelect, essentialSelect);
 
@@ -129,14 +132,16 @@ public class BudgetView extends VerticalLayout {
 
             NumberField currencyInput = new NumberField("How much is it worth? ($)");
             currencyInput.setPlaceholder("22.99");
-            
-            Select<String> gainLoseSelect = new Select<>();
+    
+            RadioButtonGroup<String> gainLoseSelect = new RadioButtonGroup<>();
+            gainLoseSelect.setLabel("Gain/Lose");
             gainLoseSelect.setItems("Gain", "Lose");
-            gainLoseSelect.setPlaceholder("Gain/Lose");
-
-            Select<String> essentialSelect = new Select<>();
-            essentialSelect.setItems("Essential", "Non-essential");
-            essentialSelect.setValue("Essential");
+            gainLoseSelect.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+    
+            RadioButtonGroup<String> essentialSelect = new RadioButtonGroup<>();
+            essentialSelect.setLabel("Essential or Non-Essential");
+            essentialSelect.setItems("Essential", "Non-Essential");
+            essentialSelect.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 
             HorizontalLayout notificationLayout = new HorizontalLayout(name, currencyInput, gainLoseSelect, essentialSelect);
 
