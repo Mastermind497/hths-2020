@@ -29,8 +29,54 @@ public class BudgetView extends VerticalLayout {
     
     public BudgetView() {
         add(new H1("Auto-Budgeter!"));
+    
+    }
         
         
+    public Button createFixedButton() {
+        Button fButton = new Button("Add Fixed Spending/Income");
+
+        fButton.addClickListener(onClick -> {
+            Notification addHours = new Notification();
+
+            TextField name = new TextField("What did you get/purchase");
+            name.setPlaceholder("Groceries");
+
+            NumberField currencyInput = new NumberField("How much is it worth? ($)");
+            currencyInput.setPlaceholder("22.99");
+
+            Select<String> gainLoseSelect = new Select<>();
+            gainLoseSelect.setItems("Gain", "Lose");
+            gainLoseSelect.setPlaceholder("Gain/Lose");
+
+            Select<String> essentialSelect = new Select<>();
+            essentialSelect.setItems("Essential", "Non-essential");
+            essentialSelect.setValue("Essential");
+
+            HorizontalLayout notificationLayout = new HorizontalLayout(name, currencyInput, gainLoseSelect, essentialSelect);
+
+            Button saveButton = new Button("Save", onSave -> {
+                Spending spending = new Spending();
+                spendingList.add(spending);
+                spending.setName(name.getValue());
+                spending.setAmt(BigDecimal.valueOf(currencyInput.getValue()));
+                spending.setEssential(essentialSelect.getValue().equals("Essential"));
+                spending.setChange(gainLoseSelect.getValue().equals("Gain"));
+
+                name.setValue("");
+                currencyInput.setValue(0d);
+                essentialSelect.setValue("");
+                gainLoseSelect.setValue("");
+            });
+
+            Button closeButton = new Button("Close", onCloseClick -> addHours.close());
+
+            addHours.add(notificationLayout);
+            addHours.add(saveButton, closeButton);
+            addHours.open();
+        });
+
+        return fButton;
     }
 
     public Button createSpendingButton() {
