@@ -31,7 +31,23 @@ public class LearnView extends VerticalLayout{
                         "on time. This is probably the most key aspect. The next thing to keep in mind is consistency. " +
                         "Finally, staying out of debt is the last thing to keep in mind. While it seems rather obvious," +
                         " being in debt builds one up for failure. The stress and interest that follows debt will generally " +
-                        "lead to more failure.")
+                        "lead to more failure.\n"),
+                new Text("Building Credit: Making sure all your payments (loans, bills) are on time. This is probably the most important " +
+                        "Consistency — If you never slip up, your credit score will definitely rise "+
+                        "Staying out of debt\n"),
+                new Text("Consolidate your loans "+
+                           "If possible, transfer your loans onto another credit card before the teaser rates bump up. "+
+                         "After transferring your debt balance, you can pay off more of your debt at 0% interest for some time. \n"),
+                new Text("Do your own debt management "+
+                         "Credit counseling can be very expensive. Try to not get new debt. Cut back on spendings. "+
+                         "Try to increase your income by asking for raises or looking for additional jobs. "+
+                         "Others cannot help you with things you can’t do yourself. "+
+                         "If worst comes to worst, local and government financial programs aimed at low-income families can help. "+
+                         "There are also non profit organizations that help with credit management, "+
+                         "such as debtor’s anonymous and the national foundation for credit counseling. \n"),
+                new Text("Lower Your Interest Rate "+
+                         "Can you apply for low-interest credit cards? Can you take out a cheaper personal loan to pay off a more expensive loan? "+ 
+                         "Financial institutions can have hardship programs, and bankers are sometimes willing to negotiate!\n"),
         );
         accordion.add("Billing Address", creditLayout);
 
