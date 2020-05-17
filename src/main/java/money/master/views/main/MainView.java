@@ -24,6 +24,7 @@ import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import money.master.views.budget.BudgetView;
+import money.master.views.learn.LearnView;
 
 import java.util.*;
 
@@ -85,6 +86,7 @@ public class MainView extends AppLayout {
     private static Tab[] getAvailableTabs() {
         final List<Tab> tabs = new ArrayList<>();
         tabs.add(createTab("Budgeter", BudgetView.class));
+        tabs.add(createTab("Learn", LearnView.class));
         return tabs.toArray(new Tab[0]);
     }
 
