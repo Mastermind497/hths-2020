@@ -26,7 +26,7 @@ public class Spending {
         this.localDate = localDate;
     }
     
-    public static BigDecimal getSum(List<Spending> fixedList) {
+    public static Salary getSum(List<Spending> fixedList) {
         BigDecimal sum = BigDecimal.ZERO;
         
         for (Spending s : fixedList) {
@@ -34,7 +34,7 @@ public class Spending {
             else sum = sum.add(s.getAmt());
         }
         
-        return sum;
+        return new Salary(sum);
     }
     
     public String getItem() {

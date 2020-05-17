@@ -13,9 +13,10 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
-import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.BigDecimalField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.NumberRenderer;
+import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 import money.master.backend.Salary;
@@ -30,9 +31,11 @@ import static com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CE
 
 @Route(value = "profile/budget", layout = MainView.class)
 @UIScope
+@PreserveOnRefresh
 public class BudgetView extends VerticalLayout {
     
-    private Salary salary = new Salary(BigDecimal.valueOf(150000));
+    private Salary salary = new Salary(BigDecimal.ZERO);
+    private BigDecimal toSave = null;
     
     private Button addSpendingButton = createSpendingButton();
     private Button fixedButton = createFixedButton();
@@ -42,51 +45,43 @@ public class BudgetView extends VerticalLayout {
     public static final List<Spending> spendingList = new ArrayList<>();
     public static final List<Spending> fixedList = new ArrayList<>();
     
-    public static H3 fixedSpendingIncome = new H3(String.valueOf(Spending.getSum(fixedList)));
+    public static H3 fixedSpendingIncomeValue = new H3(Spending.getSum(fixedList).toString());
     
     public BudgetView() {
-        setJustifyContentMode(JustifyContentMode.CENTER);
-        setAlignItems(CENTER);
-        
-        add(new H1("Auto-Budgeter!"));
+
+        if (salary.equals(BigDecimal.ZERO) || toSave == null) {
+            Notification main = new Notification();
+            BigDecimalField salaryField = new BigDecimalField("Yearly Salary");
+            BigDecimalField toSaveField = new BigDecimalField("Amount to Save");
     
-        add(new H3("Spending"));
-        spendingGrid = new Grid<>();
-        spendingGrid.addColumn(Spending::getName, "Name", "String")
-                .setHeader("Name of Purchase/Gain")
-                .setAutoWidth(true)
-                .setSortable(true);
-        spendingGrid.addColumn(new NumberRenderer<>(
-                    Spending::getAmt, "$ %(,.2f", Locale.US, "$ 0.00"),
-                               "BigDecimal", "Value")
-                .setHeader("Value")
-                .setAutoWidth(true)
-                .setSortable(true);
-        spendingGrid.addColumn(Spending::getChange, "Change", "String")
-                .setHeader("Gain/Loss")
-                .setAutoWidth(true)
-                .setSortable(true);
-        spendingGrid.addColumn(Spending::getEssential, "Name", "String")
-                .setHeader("Essentiality")
-                .setAutoWidth(true)
-                .setSortable(true);
-        spendingGrid.addColumn(Spending::getLocalDate, "Date", "Time")
-                .setHeader("Date")
-                .setAutoWidth(true)
-                .setSortable(true);
-        spendingGrid.setWidthFull();
-        spendingGrid.setMaxHeight("60%");
-        spendingGrid.setHeightByRows(true);
+            salaryField.addValueChangeListener(onChange -> {
+                salary = new Salary(onChange.getValue());
+                toSaveField.setValue(onChange.getValue().multiply(new BigDecimal("0.05")));
+            });
     
-        spendingGrid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_ROW_STRIPES);
+            toSaveField.addValueChangeListener(onChange -> {
+                toSave = onChange.getValue();
+            });
     
-        add(addSpendingButton);
-        add(new H2("Fixed Costs/Income"));
-        add(fixedSpendingIncome);
-        
-        add(fixedButton);
-        
-        add(spendingGrid);
+            main.add(salaryField, toSaveField);
+    
+            Button save = new Button("Save", onChange -> {
+                salary = new Salary(salaryField.getValue());
+                toSave = toSaveField.getValue();
+                main.close();
+    
+                resetStage();
+            });
+    
+            main.add(save);
+    
+            main.setPosition(Notification.Position.MIDDLE);
+    
+            main.open();
+        }
+        else {
+            resetStage();
+        }
     }
         
         
@@ -99,7 +94,7 @@ public class BudgetView extends VerticalLayout {
             TextField name = new TextField("What did you get/purchase");
             name.setPlaceholder("Groceries");
 
-            NumberField currencyInput = new NumberField("How much is it worth? ($)");
+            BigDecimalField currencyInput = new BigDecimalField("How much is it worth? ($)");
             currencyInput.setPlaceholder("22.99");
             
             RadioButtonGroup<String> gainLoseSelect = new RadioButtonGroup<>();
@@ -116,27 +111,29 @@ public class BudgetView extends VerticalLayout {
 
             Button saveButton = new Button("Save", onSave -> {
                 Spending spending = new Spending();
-                spendingList.add(spending);
+                fixedList.add(spending);
                 spending.setName(name.getValue());
-                spending.setAmt(BigDecimal.valueOf(currencyInput.getValue()));
+                spending.setAmt(currencyInput.getValue());
                 spending.setEssential(essentialSelect.getValue().equals("Essential"));
                 spending.setChange(gainLoseSelect.getValue().equals("Gain"));
 
                 name.setValue("");
-                currencyInput.setValue(0d);
+                currencyInput.setValue(BigDecimal.ZERO);
                 essentialSelect.setValue("");
                 gainLoseSelect.setValue("");
-    
-                fixedSpendingIncome = new H3(String.valueOf(Spending.getSum(fixedList)));
+                
+                resetFixedSpendingIncomeValue();
             });
             saveButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
             Button closeButton = new Button("Close", onCloseClick -> {
                 addHours.close();
-                fixedSpendingIncome = new H3(String.valueOf(Spending.getSum(fixedList)));
+                resetFixedSpendingIncomeValue();
+    
+                resetStage();
             });
     
-            fixedSpendingIncome = new H3(String.valueOf(Spending.getSum(fixedList)));
+            resetFixedSpendingIncomeValue();
             
             addHours.setPosition(Notification.Position.MIDDLE);
             notificationLayout.setWidthFull();
@@ -161,7 +158,7 @@ public class BudgetView extends VerticalLayout {
             TextField name = new TextField("What did you get/purchase");
             name.setPlaceholder("Groceries");
 
-            NumberField currencyInput = new NumberField("How much is it worth? ($)");
+            BigDecimalField currencyInput = new BigDecimalField("How much is it worth? ($)");
             currencyInput.setPlaceholder("22.99");
     
             RadioButtonGroup<String> gainLoseSelect = new RadioButtonGroup<>();
@@ -183,13 +180,13 @@ public class BudgetView extends VerticalLayout {
             Button saveButton = new Button("Save", onSave -> {
                 Spending spending = new Spending();
                 spending.setName(name.getValue());
-                spending.setAmt(BigDecimal.valueOf(currencyInput.getValue()));
+                spending.setAmt(currencyInput.getValue());
                 spending.setEssential(essentialSelect.getValue().equals("Essential"));
                 spending.setChange(gainLoseSelect.getValue().equals("Gain"));
                 spending.setLocalDate(dateChooser.getValue());
                 spendingList.add(spending);
                 name.setValue("");
-                currencyInput.setValue(0d);
+                currencyInput.setValue(BigDecimal.ZERO);
                 essentialSelect.setValue("");
                 gainLoseSelect.setValue("");
                 dateChooser.setValue(LocalDate.now());
@@ -215,6 +212,59 @@ public class BudgetView extends VerticalLayout {
         });
 
         return button;
+    }
+    
+    public void resetStage() {
+        removeAll();
+        add(new H1("Auto-Budgeter!"));
+    
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setAlignItems(CENTER);
+    
+    
+        add(new H3(String.format("Salary: %s/year", salary.toString())));
+        add(new H3(String.format("Savings: $%s/year", toSave.toString())));
+    
+        spendingGrid = new Grid<>();
+        spendingGrid.addColumn(Spending::getName, "Name", "String")
+                .setHeader("Name of Purchase/Gain")
+                .setAutoWidth(true)
+                .setSortable(true);
+        spendingGrid.addColumn(new NumberRenderer<>(
+                                       Spending::getAmt, "$ %(,.2f", Locale.US, "$ 0.00"),
+                               "BigDecimal", "Value")
+                .setHeader("Value")
+                .setAutoWidth(true)
+                .setSortable(true);
+        spendingGrid.addColumn(Spending::getChange, "Change", "String")
+                .setHeader("Gain/Loss")
+                .setAutoWidth(true)
+                .setSortable(true);
+        spendingGrid.addColumn(Spending::getEssential, "Name", "String")
+                .setHeader("Essentiality")
+                .setAutoWidth(true)
+                .setSortable(true);
+        spendingGrid.addColumn(Spending::getLocalDate, "Date", "Time")
+                .setHeader("Date")
+                .setAutoWidth(true)
+                .setSortable(true);
+        spendingGrid.setWidthFull();
+        spendingGrid.setMaxHeight("60%");
+        spendingGrid.setHeightByRows(true);
+    
+        spendingGrid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_ROW_STRIPES);
+    
+    
+        add(new H2("Fixed Costs/Income"));
+        add(fixedSpendingIncomeValue);
+        add(fixedButton);
+        add(new H2("Spending"));
+        add(addSpendingButton);
+        add(spendingGrid);
+    }
+    
+    public void resetFixedSpendingIncomeValue() {
+        fixedSpendingIncomeValue = new H3(Spending.getSum(fixedList).toString());
     }
 
 }

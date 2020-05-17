@@ -57,9 +57,11 @@ public class MainView extends AppLayout {
         
         HorizontalLayout navBar = new HorizontalLayout();
         navBar.setPadding(true);
+        navBar.setHeightFull();
         navBar.add(new DrawerToggle());
         
         HorizontalLayout spacer = new HorizontalLayout(new H1(""));
+        spacer.setHeight("1%");
         spacer.setWidth("90%");
         navBar.add(spacer);
         navBar.add(profile);

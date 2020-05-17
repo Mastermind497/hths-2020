@@ -22,4 +22,9 @@ public class Salary {
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
+    
+    @Override
+    public String toString() {
+        return String.format("$%s", salary.toString());
+    }
 }

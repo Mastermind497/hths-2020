@@ -10,12 +10,7 @@ $_documentContainer.innerHTML = `
   <style>
     html {
       --lumo-border-radius: calc(var(--lumo-size-m) / 2);
-      --lumo-primary-color: hsl(214, 90%, 52%);
-      --lumo-primary-text-color: rgb(24,223,90);
-      --lumo-success-text-color: #1974D2;
-      --lumo-error-text-color: hsl(3, 100%, 61%);
-      --lumo-error-color: hsl(3, 100%, 61%);
-      --lumo-success-color: #1974D2;
+      --lumo-font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
     }
     [theme~="dark"] {
       --lumo-primary-color: rgb(85,184,137);
