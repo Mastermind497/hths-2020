@@ -221,9 +221,21 @@ public class BudgetView extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(CENTER);
     
-    
-        add(new H3(String.format("Salary: %s/year", salary.toString())));
-        add(new H3(String.format("Savings: $%s/year", toSave.toString())));
+        
+        HorizontalLayout moneyAnalysis = new HorizontalLayout();
+        
+        VerticalLayout salarySavings = new VerticalLayout(new H3(String.format("Salary: %s/year", salary.toString())),
+                                                          new H3(String.format("Savings: $%s/year", toSave.toString())));
+        
+        List<Spending> moneyLeftList = new ArrayList<>();
+        moneyLeftList.addAll(fixedList);
+        moneyLeftList.addAll(spendingList);
+
+        moneyAnalysis.add(salarySavings, new H3(String.format("Money Left: %s", salary.getRemaining(moneyLeftList, toSave).toString())));
+        
+        moneyAnalysis.setJustifyContentMode(JustifyContentMode.START);
+        
+        add(moneyAnalysis);
     
         spendingGrid = new Grid<>();
         spendingGrid.addColumn(Spending::getName, "Name", "String")

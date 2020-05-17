@@ -1,6 +1,7 @@
 package money.master.backend;
 
 import java.math.BigDecimal;
+import java.util.*;
 
 public class Salary {
     private BigDecimal salary;
@@ -21,6 +22,16 @@ public class Salary {
     
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+    
+    public Salary getRemaining(List<Spending> spendingList, BigDecimal saving) {
+        BigDecimal remainder = salary.subtract(saving);
+        for (Spending s : spendingList) {
+            if (s.isGain()) remainder = remainder.add(s.getAmt());
+            else remainder = remainder.subtract(s.getAmt());
+        }
+        
+        return new Salary(remainder);
     }
     
     @Override
