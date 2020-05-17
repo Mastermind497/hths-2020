@@ -15,7 +15,8 @@ public class LearnView extends VerticalLayout{
 
         VerticalLayout loansLayout = new VerticalLayout();
         loansLayout.add(
-                new Text("Credit card vs debit card --- how to build credit "+
+                new Text("Banks --- interest, types, different policies Checking Account — These are for day-to-day usage such as groceries or gas fees. Savings Account — exactly in the name, it is where you simply save up money. It is extremely important that you properly manage your savings account because this could bail you out of very nasty situations. Finding banks with high interest rates will easily allow you to compound large sums of money. "+
+                    "Credit card vs debit card --- how to build credit "+
                     "Credit Card - issued by banks or financial institutions that allow the client to borrow money from the institution. Cardholders then pay the institution back according to the terms and agreements that vary from institution to card. There are 4 main categories of credit cards: "+
                     "Standard Cards - simple line of credit "+
                     "Reward Cards - offer cash back or other rewards to the cardholder "+
