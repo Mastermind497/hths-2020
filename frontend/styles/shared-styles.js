@@ -20,7 +20,7 @@ $_documentContainer.innerHTML = `
   <template>
     <style>
       :host(:not([theme~="tertiary"])) {
-        background-image: none;
+        background-image: linear-gradient(var(--lumo-tint-5pct), var(--lumo-shade-5pct));
         box-shadow: inset 0 0 0 1px var(--lumo-contrast-20pct);
       }
 

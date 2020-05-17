@@ -4,7 +4,9 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -15,6 +17,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.NumberRenderer;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 import money.master.backend.Salary;
 import money.master.backend.Spending;
 import money.master.views.main.MainView;
@@ -23,27 +26,30 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
+import static com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CENTER;
+
 @Route(value = "profile/budget", layout = MainView.class)
+@UIScope
 public class BudgetView extends VerticalLayout {
     
     private Salary salary = new Salary(BigDecimal.valueOf(150000));
-
+    
     private Button addSpendingButton = createSpendingButton();
     private Button fixedButton = createFixedButton();
     
     private Grid<Spending> spendingGrid;
-
+    
     public static final List<Spending> spendingList = new ArrayList<>();
     public static final List<Spending> fixedList = new ArrayList<>();
     
+    public static H3 fixedSpendingIncome = new H3(String.valueOf(Spending.getSum(fixedList)));
+    
     public BudgetView() {
         setJustifyContentMode(JustifyContentMode.CENTER);
-        setAlignItems(Alignment.CENTER);
+        setAlignItems(CENTER);
         
         add(new H1("Auto-Budgeter!"));
-        add(addSpendingButton);
-        add(fixedButton);
-        
+    
         add(new H3("Spending"));
         spendingGrid = new Grid<>();
         spendingGrid.addColumn(Spending::getName, "Name", "String")
@@ -71,6 +77,14 @@ public class BudgetView extends VerticalLayout {
         spendingGrid.setWidthFull();
         spendingGrid.setMaxHeight("60%");
         spendingGrid.setHeightByRows(true);
+    
+        spendingGrid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_ROW_STRIPES);
+    
+        add(addSpendingButton);
+        add(new H2("Fixed Costs/Income"));
+        add(fixedSpendingIncome);
+        
+        add(fixedButton);
         
         add(spendingGrid);
     }
@@ -112,17 +126,26 @@ public class BudgetView extends VerticalLayout {
                 currencyInput.setValue(0d);
                 essentialSelect.setValue("");
                 gainLoseSelect.setValue("");
+    
+                fixedSpendingIncome = new H3(String.valueOf(Spending.getSum(fixedList)));
             });
             saveButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
-            Button closeButton = new Button("Close", onCloseClick -> addHours.close());
-            closeButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
+            Button closeButton = new Button("Close", onCloseClick -> {
+                addHours.close();
+                fixedSpendingIncome = new H3(String.valueOf(Spending.getSum(fixedList)));
+            });
     
+            fixedSpendingIncome = new H3(String.valueOf(Spending.getSum(fixedList)));
+            
             addHours.setPosition(Notification.Position.MIDDLE);
             notificationLayout.setWidthFull();
 
             addHours.add(notificationLayout);
-            addHours.add(saveButton, closeButton);
+            HorizontalLayout buttonBar = new HorizontalLayout(saveButton, closeButton);
+            buttonBar.setAlignSelf(CENTER);
+            buttonBar.setJustifyContentMode(JustifyContentMode.CENTER);
+            addHours.add(buttonBar);
             addHours.open();
         });
 
@@ -159,22 +182,23 @@ public class BudgetView extends VerticalLayout {
 
             Button saveButton = new Button("Save", onSave -> {
                 Spending spending = new Spending();
-                fixedList.add(spending);
                 spending.setName(name.getValue());
                 spending.setAmt(BigDecimal.valueOf(currencyInput.getValue()));
                 spending.setEssential(essentialSelect.getValue().equals("Essential"));
                 spending.setChange(gainLoseSelect.getValue().equals("Gain"));
                 spending.setLocalDate(dateChooser.getValue());
+                spendingList.add(spending);
                 name.setValue("");
                 currencyInput.setValue(0d);
                 essentialSelect.setValue("");
                 gainLoseSelect.setValue("");
                 dateChooser.setValue(LocalDate.now());
+                spendingGrid.setItems(spendingList);
             });
 
             Button closeButton = new Button("Close", onCloseClick -> {
-                addHours.close();
                 spendingGrid.setItems(spendingList);
+                addHours.close();
             });
             saveButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
             closeButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
@@ -183,7 +207,10 @@ public class BudgetView extends VerticalLayout {
             notificationLayout.setWidthFull();
 
             addHours.add(notificationLayout);
-            addHours.add(saveButton, closeButton);
+            HorizontalLayout buttonBar = new HorizontalLayout(saveButton, closeButton);
+            buttonBar.setAlignSelf(CENTER);
+            buttonBar.setJustifyContentMode(JustifyContentMode.CENTER);
+            addHours.add(buttonBar);
             addHours.open();
         });
 

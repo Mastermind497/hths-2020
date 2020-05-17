@@ -2,6 +2,7 @@ package money.master.backend;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.*;
 
 public class Spending {
     private String     item;
@@ -23,6 +24,17 @@ public class Spending {
         this.name      = name;
         this.change    = change;
         this.localDate = localDate;
+    }
+    
+    public static BigDecimal getSum(List<Spending> fixedList) {
+        BigDecimal sum = BigDecimal.ZERO;
+        
+        for (Spending s : fixedList) {
+            if (s.isGain()) sum = sum.subtract(s.getAmt());
+            else sum = sum.add(s.getAmt());
+        }
+        
+        return sum;
     }
     
     public String getItem() {
@@ -49,7 +61,7 @@ public class Spending {
         this.name = name;
     }
     
-    public boolean isChange() {
+    public boolean isGain() {
         return change;
     }
     
