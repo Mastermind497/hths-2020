@@ -9,33 +9,23 @@ $_documentContainer.innerHTML = `
 <custom-style>
   <style>
     html {
-      --lumo-primary-color: hsl(214, 90%, 52%);
-      --lumo-font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
       --lumo-border-radius: calc(var(--lumo-size-m) / 2);
+      --lumo-primary-color: hsl(214, 90%, 52%);
+      --lumo-primary-text-color: rgb(24,223,90);
+      --lumo-success-text-color: #1974D2;
+      --lumo-error-text-color: hsl(3, 100%, 61%);
+      --lumo-error-color: hsl(3, 100%, 61%);
+      --lumo-success-color: #1974D2;
+    }
+    [theme~="dark"] {
+      --lumo-primary-color: rgb(85,184,137);
+      --lumo-primary-text-color: rgb(85,184,137);
+      --lumo-error-color: hsl(3, 100%, 67%);
+      --lumo-success-color: #419cfa;
+      --lumo-success-text-color: #419cfa;
     }
   </style>
 </custom-style>
-
-<dom-module id="button-style" theme-for="vaadin-button">
-  <template>
-    <style>
-      :host(:not([theme~="tertiary"])) {
-        background-image: linear-gradient(var(--lumo-tint-5pct), var(--lumo-shade-5pct));
-        box-shadow: inset 0 0 0 1px var(--lumo-contrast-20pct);
-      }
-
-      :host(:not([theme~="tertiary"]):not([theme~="primary"]):not([theme~="error"]):not([theme~="success"])) {
-        color: var(--lumo-body-text-color);
-      }
-
-      :host([theme~="primary"]) {
-        text-shadow: 0 -1px 0 var(--lumo-shade-20pct);
-      }
-    </style>
-  </template>
-</dom-module>
-
-
 <custom-style>
   <style>
     html {
@@ -46,7 +36,6 @@ $_documentContainer.innerHTML = `
     }
   </style>
 </custom-style>
-
 <dom-module id="chart" theme-for="vaadin-chart">
   <template>
     <style include="vaadin-chart-default-theme">
