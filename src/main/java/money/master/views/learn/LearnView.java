@@ -44,7 +44,7 @@ public class LearnView extends VerticalLayout{
                     "Debit card - a payment card that deducts money directly from a cardholder’s checking account. There are 3 main categories of debit cards: "+
                     "Standard debit cards draw from your bank account.  "+
                     "Electronic Benefits Transfer (EBT) cards are issued by government agencies to allow cardholders to use their benefits to make purchases. "+
-                    "Prepaid debit cards give people without a bank account a way to make electronic purchases up to the amount that was preloaded on the card. \n"),
+                    "Prepaid debit cards give people without a bank account a way to make electronic purchases up to the amount that was preloaded on the card. \n")
         );
         accordion.add("Managing Loans", loansLayout);
 
@@ -80,7 +80,7 @@ public class LearnView extends VerticalLayout{
                 new Text("Pay On Time "+
                          "Late or missing payments do a toll on your credit. Try to cut back expenses and save money. Avoid missing payments at all costs.\n"),
                 new Text("Pay More Than Required Each Month "+
-                         "Extra money can be an insurance as emergency funds, but it should be used to resolve any outstanding debts first. \n"),
+                         "Extra money can be an insurance as emergency funds, but it should be used to resolve any outstanding debts first. \n")
 
 
         );
@@ -103,7 +103,7 @@ public class LearnView extends VerticalLayout{
                         "Debit card - a payment card that deducts money directly from a cardholder’s checking account. There are 3 main categories of debit cards: "+
                         "Standard debit cards draw from your bank account. "+
                         "Electronic Benefits Transfer (EBT) cards are issued by government agencies to allow cardholders to use their benefits to make purchases. "+
-                        "Prepaid debit cards give people without a bank account a way to make electronic purchases up to the amount that was preloaded on the card. \n"),                        
+                        "Prepaid debit cards give people without a bank account a way to make electronic purchases up to the amount that was preloaded on the card. \n")
         );
         accordion.add("Payment", bankLayout);
 
