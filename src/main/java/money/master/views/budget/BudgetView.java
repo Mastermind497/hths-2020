@@ -34,22 +34,21 @@ import static com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CE
 @PreserveOnRefresh
 public class BudgetView extends VerticalLayout {
     
-    private Salary salary = new Salary(BigDecimal.ZERO);
-    private BigDecimal toSave = null;
+    private static Salary salary = new Salary(BigDecimal.ZERO);
+    private static BigDecimal toSave = null;
     
     private Button addSpendingButton = createSpendingButton();
     private Button fixedButton = createFixedButton();
     
     private Grid<Spending> spendingGrid;
     
-    public static final List<Spending> spendingList = new ArrayList<>();
-    public static final List<Spending> fixedList = new ArrayList<>();
+    private static final List<Spending> spendingList = new ArrayList<>();
+    private static final List<Spending> fixedList = new ArrayList<>();
     
     public static H3 fixedSpendingIncomeValue = new H3(Spending.getSum(fixedList).toString());
     
     public BudgetView() {
-
-        if (salary.equals(BigDecimal.ZERO) || toSave == null) {
+        if (salary.getSalary().equals(BigDecimal.ZERO) || toSave == null) {
             Notification main = new Notification();
             BigDecimalField salaryField = new BigDecimalField("Yearly Salary");
             BigDecimalField toSaveField = new BigDecimalField("Amount to Save");
@@ -263,6 +262,7 @@ public class BudgetView extends VerticalLayout {
         spendingGrid.setWidthFull();
         spendingGrid.setMaxHeight("60%");
         spendingGrid.setHeightByRows(true);
+        spendingGrid.setItems(spendingList);
     
         spendingGrid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_ROW_STRIPES);
     

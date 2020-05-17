@@ -7,7 +7,7 @@ import com.vaadin.flow.router.Route;
 
 @Route(value = "", layout = HomeView.class)
 public class Home extends VerticalLayout {
-    private final Image main = new Image("image/mainPage.png", "Money");
+    private final Image main = new Image("https://media.discordapp.net/attachments/711023877991694377/711594690918744105/Be_happy_for_this_moment..png?width=1204&height=677", "Money");
     public Home() {
     
         H1 header = new H1("Welcome to MoneyMaster, your Money Managing Machine!");
