@@ -16,6 +16,25 @@ public class LearnView extends VerticalLayout{
         VerticalLayout loansLayout = new VerticalLayout();
         loansLayout.add(
                 new Text("Banks --- interest, types, different policies Checking Account — These are for day-to-day usage such as groceries or gas fees. Savings Account — exactly in the name, it is where you simply save up money. It is extremely important that you properly manage your savings account because this could bail you out of very nasty situations. Finding banks with high interest rates will easily allow you to compound large sums of money. "+
+                    "Managing Loans --- taking out how many, mortgage "+
+                    "Monitor your credit score "+
+                    "Importance of Credit — Gives you greater spending power. But also, this offers you greater opportunities in life. Employers will look at your credit score, and a positive credit score will reflect greatly on you in terms of organization and responsibility. Landlords also receive your credit report, and this could be the dealbreaker to getting a good home. Overall, it’s essential to maintain credit "+
+                    "Building Credit: "+
+                    "Making sure all your payments (loans, bills) are on time. This is probably the most important "+
+                    "Consistency — If you never slip up, your credit score will definitely rise "+
+                    "Staying out of debt "+
+                    "Consolidate your loans "+
+                    "If possible, transfer your loans onto another credit card before the teaser rates bump up. After transferring your debt balance, you can pay off more of your debt at 0% interest for some time. "+
+                    "Do your own debt management "+
+                    "Credit counseling can be very expensive. Try to not get new debt. Cut back on spendings. Try to increase your income by asking for raises or looking for additional jobs. Others cannot help you with things you can’t do yourself.  "+
+                    "If worst comes to worst, local and government financial programs aimed at low-income families can help.  "+
+                    "There are also non profit organizations that help with credit management, such as debtor’s anonymous and the national foundation for credit counseling.  "+
+                    "Lower Your Interest Rate "+
+                    "Can you apply for low-interest credit cards? Can you take out a cheaper personal loan to pay off a more expensive loan? Financial institutions can have hardship programs, and bankers are sometimes willing to negotiate! "+
+                    "Pay On Time "+
+                    "Late or missing payments do a toll on your credit. Try to cut back expenses and save money. Avoid missing payments at all costs. "+
+                    "Pay More Than Required Each Month "+
+                    "Extra money can be an insurance as emergency funds, but it should be used to resolve any outstanding debts first. "+
                     "Credit card vs debit card --- how to build credit "+
                     "Credit Card - issued by banks or financial institutions that allow the client to borrow money from the institution. Cardholders then pay the institution back according to the terms and agreements that vary from institution to card. There are 4 main categories of credit cards: "+
                     "Standard Cards - simple line of credit "+
